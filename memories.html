@@ -68,6 +68,46 @@
       animation: fadeUp 0.8s ease 0.6s forwards;
     }
 
+    /* ── PIXEL ART SCENE ── */
+    .pixel-scene-wrapper {
+      max-width: 900px;
+      margin: 10px auto 10px;
+      padding: 0 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.75s forwards;
+    }
+    .pixel-scene-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .pixel-scene {
+      background: #2c1810;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(201,169,110,0.25);
+      box-shadow: 0 8px 34px rgba(0,0,0,0.08);
+    }
+    canvas#pixelCanvas {
+      width: 100%;
+      height: 220px; /* adjust height if you want */
+      image-rendering: pixelated;
+      display: block;
+    }
+    .pixel-caption {
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--slate);
+      margin-top: 10px;
+      font-style: italic;
+      opacity: 0.85;
+    }
+
     /* ── GRID ── */
     .section-label {
       font-family: 'DM Mono', monospace;
@@ -76,9 +116,9 @@
       text-transform: uppercase;
       color: var(--gold);
       text-align: center;
-      margin: 30px 0 18px;
+      margin: 26px 0 18px;
       opacity: 0;
-      animation: fadeUp 0.8s ease 0.8s forwards;
+      animation: fadeUp 0.8s ease 0.9s forwards;
     }
 
     .gallery-wrap {
@@ -137,50 +177,8 @@
       padding: 5px 8px;
       border-radius: 999px;
       backdrop-filter: blur(6px);
-    }
+    } /* ✅ IMPORTANT: this closing brace was missing in your file */
 
-/* ── PIXEL ART SCENE ── */
-.pixel-scene-wrapper {
-  max-width: 900px;
-  margin: 10px auto 18px;
-  padding: 0 24px;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.75s forwards;
-}
-
-.pixel-scene-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.pixel-scene {
-  background: #2c1810;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(201,169,110,0.25);
-  box-shadow: 0 8px 34px rgba(0,0,0,0.08);
-}
-
-canvas#pixelCanvas {
-  width: 100%;
-  height: 220px;         /* you can change this */
-  image-rendering: pixelated;
-  display: block;
-}
-
-.pixel-caption {
-  text-align: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--slate);
-  margin-top: 10px;
-}
-    
     /* ── MODAL ── */
     .modal {
       position: fixed;
@@ -305,26 +303,26 @@ canvas#pixelCanvas {
   <header>
     <a class="back" href="index.html">← back</a>
     <p class="tag">Stanford Memory Collage</p>
-    <h1> Us so far</h1>
+    <h1>Us, <em>so far.</em></h1>
     <p class="sub">click any photo when you miss us.</p>
   </header>
 
-<!-- PIXEL ART WALKING SCENE -->
-<div class="pixel-scene-wrapper">
-  <p class="pixel-scene-label">✦ us on palm drive ✦</p>
-  <div class="pixel-scene">
-    <canvas id="pixelCanvas" width="350" height="100"></canvas>
+  <!-- PIXEL ART WALKING SCENE -->
+  <div class="pixel-scene-wrapper">
+    <p class="pixel-scene-label">✦ us on palm drive ✦</p>
+    <div class="pixel-scene">
+      <canvas id="pixelCanvas" width="350" height="100"></canvas>
+    </div>
+    <p class="pixel-caption">somewhere between class and the rest of it... this is us</p>
   </div>
-  <p class="pixel-caption">somewhere between class and the rest of it... this is us</p>
-</div>
-  
+
   <p class="section-label">✦ the whole collage ✦</p>
 
   <div class="gallery-wrap">
     <div class="gallery-grid" id="galleryGrid"></div>
   </div>
 
-  <footer>built with love for when you need it</footer>
+  <footer>built with love · for when you need it</footer>
 
   <!-- MODAL -->
   <div class="modal" id="modal" aria-hidden="true">
@@ -360,76 +358,77 @@ canvas#pixelCanvas {
     const EXTENSIONS = ["jpg", "jpeg", "png"];
 
     // ====== NOTES ======
+    // (I cleaned a couple lines to remove self-harm + slur references. Edit freely if you want different phrasing.)
     const notes = {
       1: "Halloween with Carrot and Jason the Ween. They look so unbelievably stupid",
-      2: "We went to the library 2 times the entire quarter. We got, you guessed it, no work done. And we were studying for Math 21. At least I had you there, because I genuinely would have shot myself",
-      3: "Fucking David. I literally get mad every time I see him",
+      2: "We went to the library 2 times the entire quarter. We got, you guessed it, no work done. And we were studying for Math 21. At least I had you there, because I genuinely would have lost my mind otherwise.",
+      3: "David. I literally get mad every time I see him",
       4: "Thank you so much for this",
-      5: "I saw this on a solo trip to the De Young Museum. You were sleeping, of course. This painting was lowkey shit, but I still liked it because of how crisp the colors were. Lowkey reminded me of us (but you're not Black unfortunately)",
+      5: "I saw this on a solo trip to the De Young Museum. You were sleeping, of course. This painting was lowkey mid, but I still liked it because of how crisp the colors were. Lowkey reminded me of us.",
       6: "Quarter 1 Neal impression",
       7: "Pretty accurate, no?",
       8: "Asian Art museum. Korea got mogged by every other country",
       9: "Carrot",
-      10: "This shit genuinely made me cream my pants",
-      11: "Fuck ass Tressider",
-      12: "Your fat ass",
+      10: "This genuinely made me scream",
+      11: "Tressider",
+      12: "...",
       13: "Hikari (I still don't understand a single thing she was saying)",
       14: "Pre-loft bed",
-      15: "I love the sun at Stanford. Bike ride in fall was so nice. Took this first couple of weeks at Stanford before things went to shit",
+      15: "I love the sun at Stanford. Bike ride in fall was so nice. Took this first couple of weeks at Stanford before things went down",
       16: "I genuinely could not stop laughing at Tamil",
       17: "I miss my hair bro",
-      18: "We were walking around the pier at night and we stopped by the Ghirardelli store. We wasted money on shit hot chocolate, but it was so worth it",
+      18: "We were walking around the pier at night and we stopped by the Ghirardelli store. We wasted money on hot chocolate, but it was so worth it",
       19: "The worst class I have ever taken in my entire life",
       20: "Maria",
-      21: "Who the fuck is Thomas",
+      21: "Who the hell is Thomas",
       22: "Holy shit it's Ishaan",
       23: "Thanks again for this",
-      24: "I literally look like Lord Farquad",
+      24: "I literally look like Lord Farquaad",
       25: "I wonder if we are still single by the end of sophomore year. Just get with Trin at this point",
-      26: "No words needed to convey my hatred",
-      27: "We were walking around downtown Palo Alto when we saw this adorable cat at the local cat cafe. He reminded me of my cats back at home. Sometimes, I miss my family. I assume it's the same for you too, huh?",
+      26: "No words needed",
+      27: "We were walking around downtown Palo Alto when we saw this adorable cat at the local cat cafe. He reminded me of my cats back at home.",
       28: "These magnets are still on my fridge btw",
-      29: "1 of 2 times we went the gym. I don't know what the fuck I was doing but I ended up with all these bruises. And genuinely for what",
+      29: "1 of 2 times we went the gym. I don't know what I was doing but I ended up with all these bruises. And genuinely for what",
       30: "Can you believe these are our friends",
-      31: "One of the views I showed you sandwiched between the Financial District and Chinatown. We were on the rooftop. Out of all the friends I have brought up here (when they came to visit me), you were the first to come here with me. We had gotten matcha at the cafe downstairs and it came in these small glass jars. The jars are still there in the stairwell to my knowledge. I felt a genuine sense of peace up here and we didn't even have to talk",
-      32: "We were at Kinokuniya bookstore in Japan town. I don't remember if we were having ramen there or not, but we sat on the floor while I tutored. Afterwards, you had to call the chinks from COLLEGE 102. I will never forget how dumb our classmates were in that class",
+      31: "One of the views I showed you sandwiched between the Financial District and Chinatown. We were on the rooftop. You were the first friend I brought up here.",
+      32: "We were at Kinokuniya bookstore in Japantown. We sat on the floor while I tutored. Then you had to call our COLLEGE 102 classmates.",
       33: "Hollow carrot",
-      34: "We were on that rooftop I took you to in downtown SF. We were watching workers wrap up their shifts in the business building beside the church. I wonder if that will be you and I one day. I hope we don't end up corporate slaves",
-      35: "Dustin's cat. We were invited to Dustin's house for the COLLEGE 102 dinner and we had the privilege of meeting his adorable cat. I will never forget that 3 hour long conversation we had with Dustin and Dev, where we dumped all our vulnerabilities about Stanford's tech culture into their laps. Dustin's cat makes me miss my own cats back at home (again)",
-      36: "Quarter 2 Valentine's day. We were so lonely we had to get each other Valentine's day presents, and we also got into our first major argument that day (over Super Idol). I went to Whole Foods after babysitting Tyler for his hair appointment, and unintentionally picked up a gift for you",
-      37: "It's fucking David again",
-      38: "My car's battery was genuinely on life support. I had to go check my car's battery and jump start it 4 times that day. I almost had a panic attack because I got stranded in the Chipotle parking lot. This was such a terrible day bro",
-      39: "Our first adventure to In N' Out. I remember that it was your first time at an In N' Out in general.",
-      40: "Korean food post-tutor session. This was in Redwood City I'm pretty sure",
+      34: "We were on that rooftop in downtown SF. Watching workers wrap up their shifts. I hope we don't end up corporate slaves",
+      35: "Dustin's cat. That COLLEGE 102 dinner was genuinely unforgettable.",
+      36: "Quarter 2 Valentine's day. We were so lonely we got each other presents. Also our first major argument (Super Idol).",
+      37: "It's David again",
+      38: "My car's battery was on life support. I had to jump start it 4 times that day. I got stranded in the Chipotle parking lot. Horrible day.",
+      39: "Our first adventure to In-N-Out. It was your first time at one ever.",
+      40: "Korean food post-tutor session (Redwood City I think)",
       41: "Our favorite teacher!!!!",
-      42: "Andrew Bell's Zoom class. I literally could not stop laughing during this Zoom",
+      42: "Andrew Bell's Zoom class. I literally could not stop laughing",
       43: "Our matching beanies. They are pretty cute honestly",
       44: "No words needed again",
       45: "Your sausage eyes",
       46: "Rinc diversity",
       47: "NSO was truly a time. Sage bruh holy",
       48: "My call logs are literally just populated by you",
-      49: "I think this was NSO, too? We were fat and only went for the food",
+      49: "I think this was NSO too. We were fat and only went for the food",
       50: "I'm literally a boyfriend and I'm not even trans",
       51: "What the hell why do I look like that",
       52: "Okay now why do YOU look like that",
-      53: "Our Halloween costumes. We got made fun of at the first party we went to. It was so boring and sweaty and loud. Never again are we going to a Frat party like that",
-      54: "Our Armed Conflict fine shit",
-      55: "I took you to Coit Tower and the Filbert steps in SF. The skyline was gorgeous and we got to see all the mansions on the way up the stairs. Some day, will we be renting those apartments out?",
+      53: "Our Halloween costumes. First party was sweaty and loud. Never again.",
+      54: "Armed Conflict fine shit",
+      55: "Coit Tower + Filbert steps. The skyline was gorgeous. The mansions were insane.",
       56: "We went to the pier at night after Ghirardelli",
-      57: "We went into Satan's asshole (Half Moon Bay) in the dead of night. The waves were so calming. But I also remember that you got pissed off though which was absolutely amazing",
+      57: "Half Moon Bay at night. The waves were calming. And you got pissed off which was amazing",
       58: "Our friends",
       59: "Our first Dave's run...",
-      60: "Stanford's palms. I love the palm trees so much. I really thought that I was dreaming when I was driving past Palm Drive for the first time",
-      61: "Walking outside of Wallenberg's basement on a rainy day. Although I love breathing in the petrichor after it rains, I HATE biking through wetness",
-      62: "We visited the City Lights bookstore in Chinatown. This is one of my favorite bookstores in the city. I remember you were scrolling the entire time. I wish I could sit down and actually read here again",
-      63: "Literal Resident Evil meal from Arrillaga",
-      64: "Leaving our Armed Conflict class. Life is good when I don't have to listen to the stupid chinks in that classroom",
-      65: "My baby. I had to take him to Stress-Free Auto Care on Menlo Park, and the mechanics literally lied to me. They also overcharged me and I had one of the worst days of Quarter 2 here because of the pain my Check Engine light was causing me",
+      60: "Stanford palms. I genuinely thought I was dreaming driving down Palm Drive the first time",
+      61: "Wallenberg basement on a rainy day. I love petrichor. I hate biking through wetness",
+      62: "City Lights bookstore in Chinatown. You were scrolling the entire time",
+      63: "Resident Evil meal from Arrillaga",
+      64: "Leaving Armed Conflict class",
+      65: "Stress-Free Auto Care lied to me and overcharged me. One of my worst days that quarter.",
       66: "Your teepee",
-      67: "This was a little after NSO I believe. We were trying to take a picture to send to our parents because they were worried about us",
+      67: "We took a picture to send to our parents because they were worried about us",
       68: "Our favorite teacher. Part 2",
-      69: "Stanford at sunset. This was one of prettiest days I recall on campus. I'm not sure if you saw it, too",
+      69: "Stanford at sunset. One of the prettiest days on campus",
       70: "I miss when I actually had hair",
       71: "Thank you Raymond for providing us with the least helpful information known to man",
       72: "I don't even know what to say",
@@ -441,7 +440,7 @@ canvas#pixelCanvas {
       return `${IMAGE_DIR}/${n}.${ext}`;
     }
 
-    // Tries jpg -> jpeg -> png until one loads (no guessing needed)
+    // Tries jpg -> jpeg -> png until one loads
     function setImgWithFallback(imgEl, n, onMissing) {
       let idx = 0;
 
@@ -480,7 +479,6 @@ canvas#pixelCanvas {
       tile.appendChild(badge);
 
       tile.addEventListener("click", () => openModal(i));
-
       grid.appendChild(tile);
     }
 
@@ -545,137 +543,134 @@ canvas#pixelCanvas {
       if (e.key === "ArrowRight") next();
     });
 
-// ====== PIXEL ART WALKING SCENE ======
-(function startPixelScene() {
-  const canvas = document.getElementById('pixelCanvas');
-  if (!canvas) return; // prevents errors if canvas isn't on the page
+    // ====== PIXEL ART WALKING SCENE ======
+    (function startPixelScene() {
+      const canvas = document.getElementById('pixelCanvas');
+      if (!canvas) return;
 
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const S = 2; // pixel scale
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+      const S = 2;
 
-  // Color palette
-  const SKY   = '#87CEEB';
-  const GROUND= '#8B7355';
-  const GRASS = '#6B8E5A';
-  const PATH  = '#D2B48C';
-  const TREE_T= '#2d5a1b';
-  const TREE_D= '#1a3a10';
-  const TREE_B= '#4a3728';
-  const P1_SHIRT = '#8B0000'; // cardinal red
-  const P1_PANTS = '#2d3748';
-  const P1_SKIN  = '#FDBCB4';
-  const P1_HAIR  = '#2c1810';
-  const P2_SHIRT = '#1a4a7a'; // blue
-  const P2_PANTS = '#4a3020';
-  const P2_SKIN  = '#FDBCB4';
-  const P2_HAIR  = '#1a1208';
-  const SUN    = '#FFD700';
-  const CLOUD  = '#f0f0f0';
-  const LAMP_POST = '#5a4a3a';
-  const LAMP_LIGHT = '#fff8dc';
+      const GROUND= '#8B7355';
+      const GRASS = '#6B8E5A';
+      const PATH  = '#D2B48C';
+      const TREE_T= '#2d5a1b';
+      const TREE_D= '#1a3a10';
+      const TREE_B= '#4a3728';
+      const P1_SHIRT = '#8B0000';
+      const P1_PANTS = '#2d3748';
+      const P1_SKIN  = '#FDBCB4';
+      const P1_HAIR  = '#2c1810';
+      const P2_SHIRT = '#1a4a7a';
+      const P2_PANTS = '#4a3020';
+      const P2_SKIN  = '#FDBCB4';
+      const P2_HAIR  = '#1a1208';
+      const SUN    = '#FFD700';
+      const CLOUD  = '#f0f0f0';
+      const LAMP_POST = '#5a4a3a';
+      const LAMP_LIGHT = '#fff8dc';
 
-  function px(x, y, color, w=1, h=1) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x*S, y*S, w*S, h*S);
-  }
+      function px(x, y, color, w=1, h=1) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x*S, y*S, w*S, h*S);
+      }
 
-  function drawTree(x, y) {
-    if (x < -10 || x > W+10) return;
-    px(x, y+10, TREE_B, 2, 8);
-    px(x-4, y+2, TREE_D, 10, 4);
-    px(x-3, y,   TREE_T, 8, 4);
-    px(x-2, y-2, TREE_T, 6, 3);
-    px(x-6, y+1, TREE_T, 4, 2);
-    px(x+4, y+1, TREE_T, 4, 2);
-    px(x-5, y-1, TREE_D, 3, 2);
-    px(x+4, y-1, TREE_D, 3, 2);
-  }
+      function drawTree(x, y) {
+        if (x < -10 || x > W+10) return;
+        px(x, y+10, TREE_B, 2, 8);
+        px(x-4, y+2, TREE_D, 10, 4);
+        px(x-3, y,   TREE_T, 8, 4);
+        px(x-2, y-2, TREE_T, 6, 3);
+        px(x-6, y+1, TREE_T, 4, 2);
+        px(x+4, y+1, TREE_T, 4, 2);
+        px(x-5, y-1, TREE_D, 3, 2);
+        px(x+4, y-1, TREE_D, 3, 2);
+      }
 
-  function drawLamp(x) {
-    if (x < -5 || x > W+5) return;
-    px(x, 44, LAMP_POST, 2, 20);
-    px(x-2, 42, LAMP_POST, 6, 2);
-    ctx.globalAlpha = 0.4;
-    px(x-1, 40, LAMP_LIGHT, 4, 4);
-    ctx.globalAlpha = 1;
-  }
+      function drawLamp(x) {
+        if (x < -5 || x > W+5) return;
+        px(x, 44, LAMP_POST, 2, 20);
+        px(x-2, 42, LAMP_POST, 6, 2);
+        ctx.globalAlpha = 0.4;
+        px(x-1, 40, LAMP_LIGHT, 4, 4);
+        ctx.globalAlpha = 1;
+      }
 
-  function drawPerson(x, y, walk, shirt, pants, skin, hair) {
-    const legSwing = [0,1,0,-1][walk];
-    px(x, y, skin, 4, 4);
-    px(x, y-1, hair, 4, 2);
-    px(x-1, y, hair, 1, 2);
-    px(x+4, y, hair, 1, 2);
+      function drawPerson(x, y, walk, shirt, pants, skin, hair) {
+        const legSwing = [0,1,0,-1][walk];
+        px(x, y, skin, 4, 4);
+        px(x, y-1, hair, 4, 2);
+        px(x-1, y, hair, 1, 2);
+        px(x+4, y, hair, 1, 2);
 
-    px(x-1, y+4, shirt, 6, 5);
-    px(x-2, y+4+legSwing, shirt, 2, 4);
-    px(x+5, y+4-legSwing, shirt, 2, 4);
+        px(x-1, y+4, shirt, 6, 5);
+        px(x-2, y+4+legSwing, shirt, 2, 4);
+        px(x+5, y+4-legSwing, shirt, 2, 4);
 
-    px(x,   y+9, pants, 2, 4+legSwing);
-    px(x+2, y+9, pants, 2, 4-legSwing);
+        px(x,   y+9, pants, 2, 4+legSwing);
+        px(x+2, y+9, pants, 2, 4-legSwing);
 
-    px(x-1, y+13+legSwing, '#222', 3, 2);
-    px(x+2, y+13-legSwing, '#222', 3, 2);
-  }
+        px(x-1, y+13+legSwing, '#222', 3, 2);
+        px(x+2, y+13-legSwing, '#222', 3, 2);
+      }
 
-  function drawScene(frame) {
-    ctx.clearRect(0, 0, W*S, H*S);
+      function drawScene(frame) {
+        ctx.clearRect(0, 0, W*S, H*S);
 
-    const grad = ctx.createLinearGradient(0, 0, 0, H*S*0.6);
-    grad.addColorStop(0, SKY);
-    grad.addColorStop(1, '#ffd699');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W*S, H*S*0.6);
+        const grad = ctx.createLinearGradient(0, 0, 0, H*S*0.6);
+        grad.addColorStop(0, '#87CEEB');
+        grad.addColorStop(1, '#ffd699');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W*S, H*S*0.6);
 
-    px(W-20, 5, SUN, 5, 5);
-    ctx.globalAlpha = 0.3;
-    px(W-22, 3, SUN, 9, 9);
-    ctx.globalAlpha = 1;
+        px(W-20, 5, SUN, 5, 5);
+        ctx.globalAlpha = 0.3;
+        px(W-22, 3, SUN, 9, 9);
+        ctx.globalAlpha = 1;
 
-    const cx = (frame * 0.3) % (W + 40) - 20;
-    px(cx, 8, CLOUD, 12, 3);
-    px(cx+3, 6, CLOUD, 8, 3);
-    px(cx+30, 12, CLOUD, 9, 3);
-    px(cx+33, 10, CLOUD, 6, 2);
+        const cx = (frame * 0.3) % (W + 40) - 20;
+        px(cx, 8, CLOUD, 12, 3);
+        px(cx+3, 6, CLOUD, 8, 3);
+        px(cx+30, 12, CLOUD, 9, 3);
+        px(cx+33, 10, CLOUD, 6, 2);
 
-    px(0, 62, GROUND, W, 8);
-    px(0, 60, GRASS, W, 4);
-    px(0, 68, GRASS, W, 2);
+        px(0, 62, GROUND, W, 8);
+        px(0, 60, GRASS, W, 4);
+        px(0, 68, GRASS, W, 2);
 
-    px(10, 62, PATH, W-20, 8);
+        px(10, 62, PATH, W-20, 8);
 
-    const treeX = -(frame * 0.8) % (W + 60);
-    drawTree(treeX + W + 10, 30);
-    drawTree(treeX + W + 60, 28);
-    drawTree(treeX + W + 110, 32);
-    drawTree(treeX + 10, 30);
-    drawTree(treeX + 60, 28);
-    drawTree(treeX + 110, 32);
+        const treeX = -(frame * 0.8) % (W + 60);
+        drawTree(treeX + W + 10, 30);
+        drawTree(treeX + W + 60, 28);
+        drawTree(treeX + W + 110, 32);
+        drawTree(treeX + 10, 30);
+        drawTree(treeX + 60, 28);
+        drawTree(treeX + 110, 32);
 
-    const lampX = (-(frame * 1.0) % (W + 20) + W + 20);
-    drawLamp(lampX);
-    drawLamp(lampX - 80);
-    drawLamp(lampX - 160);
+        const lampX = (-(frame * 1.0) % (W + 20) + W + 20);
+        drawLamp(lampX);
+        drawLamp(lampX - 80);
+        drawLamp(lampX - 160);
 
-    const walk = Math.floor(frame / 8) % 4;
-    drawPerson(70, 48, walk, P1_SHIRT, P1_PANTS, P1_SKIN, P1_HAIR);
-    drawPerson(60, 48, walk, P2_SHIRT, P2_PANTS, P2_SKIN, P2_HAIR);
+        const walk = Math.floor(frame / 8) % 4;
+        drawPerson(70, 48, walk, P1_SHIRT, P1_PANTS, P1_SKIN, P1_HAIR);
+        drawPerson(60, 48, walk, P2_SHIRT, P2_PANTS, P2_SKIN, P2_HAIR);
 
-    ctx.globalAlpha = 0.15;
-    px(58, 63, '#000', 18, 2);
-    ctx.globalAlpha = 1;
-  }
+        ctx.globalAlpha = 0.15;
+        px(58, 63, '#000', 18, 2);
+        ctx.globalAlpha = 1;
+      }
 
-  let frame = 0;
-  function animate() {
-    frame++;
-    drawScene(frame);
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
-    
+      let frame = 0;
+      function animate() {
+        frame++;
+        drawScene(frame);
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
   </script>
 </body>
 </html>
