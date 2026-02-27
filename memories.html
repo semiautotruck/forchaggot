@@ -301,6 +301,10 @@
   </div>
 
   <script>
+    const IMAGE_DIR = "img";
+function urlFor(n, ext) {
+  return `${IMAGE_DIR}/${n}.${ext}`;
+}
     // === FILE EXTENSIONS (from Kayla's mapping) ===
     const pngSet = new Set([4,7,16,19,21,23,25,26,44,46,48,50,71]);
     const jpgSet = new Set([1,2,3,6,9,17,20,22,24,42,43,45,47,49,51,52,53,68,70,73]);
