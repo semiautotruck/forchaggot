@@ -493,6 +493,158 @@
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     });
+    
+  </script>
+
+    <script>
+    // ── PIXEL ART WALKING SCENE ──
+    const canvas = document.getElementById('pixelCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    const S = 2; // pixel scale
+
+    // Color palette
+    const SKY   = '#87CEEB';
+    const SKY2  = '#ffd699';
+    const GROUND= '#8B7355';
+    const GRASS = '#6B8E5A';
+    const PATH  = '#D2B48C';
+    const TREE_T= '#2d5a1b';
+    const TREE_D= '#1a3a10';
+    const TREE_B= '#4a3728';
+    const P1_SHIRT = '#8B0000'; // cardinal red
+    const P1_PANTS = '#2d3748';
+    const P1_SKIN  = '#FDBCB4';
+    const P1_HAIR  = '#2c1810';
+    const P2_SHIRT = '#1a4a7a'; // blue
+    const P2_PANTS = '#4a3020';
+    const P2_SKIN  = '#FDBCB4';
+    const P2_HAIR  = '#1a1208';
+    const SUN    = '#FFD700';
+    const CLOUD  = '#f0f0f0';
+    const LAMP_POST = '#5a4a3a';
+    const LAMP_LIGHT = '#fff8dc';
+
+    function px(x, y, color, w=1, h=1) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x*S, y*S, w*S, h*S);
+    }
+
+    function drawScene(frame) {
+      ctx.clearRect(0, 0, W*S, H*S);
+
+      // Sky gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, H*S*0.6);
+      grad.addColorStop(0, '#87CEEB');
+      grad.addColorStop(1, '#ffd699');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W*S, H*S*0.6);
+
+      // Sun
+      px(W-20, 5, SUN, 5, 5);
+      // Sun glow
+      ctx.globalAlpha = 0.3;
+      px(W-22, 3, SUN, 9, 9);
+      ctx.globalAlpha = 1;
+
+      // Clouds
+      const cx = (frame * 0.3) % (W + 40) - 20;
+      px(cx, 8, CLOUD, 12, 3);
+      px(cx+3, 6, CLOUD, 8, 3);
+      px(cx+30, 12, CLOUD, 9, 3);
+      px(cx+33, 10, CLOUD, 6, 2);
+
+      // Ground
+      px(0, 62, GROUND, W, 8);
+      // Grass strips
+      px(0, 60, GRASS, W, 4);
+      px(0, 68, GRASS, W, 2);
+
+      // PATH - palm drive style
+      px(10, 62, PATH, W-20, 8);
+
+      // Trees (parallax: move slower)
+      const treeX = -(frame * 0.8) % (W + 60);
+      drawTree(treeX + W + 10, 30);
+      drawTree(treeX + W + 60, 28);
+      drawTree(treeX + W + 110, 32);
+      drawTree(treeX + 10, 30);
+      drawTree(treeX + 60, 28);
+      drawTree(treeX + 110, 32);
+
+      // Lamp posts
+      const lampX = (-(frame * 1.0) % (W + 20) + W + 20);
+      drawLamp(lampX);
+      drawLamp(lampX - 80);
+      drawLamp(lampX - 160);
+
+      // Characters walk
+      const walk = Math.floor(frame / 8) % 4;
+      // Person 1 (you)
+      drawPerson(70, 48, walk, P1_SHIRT, P1_PANTS, P1_SKIN, P1_HAIR, false);
+      // Person 2 (him) - slightly behind
+      drawPerson(60, 48, walk, P2_SHIRT, P2_PANTS, P2_SKIN, P2_HAIR, true);
+
+      // Ground shadow under people
+      ctx.globalAlpha = 0.15;
+      px(58, 63, '#000', 18, 2);
+      ctx.globalAlpha = 1;
+    }
+
+    function drawTree(x, y) {
+      if (x < -10 || x > W+10) return;
+      // trunk
+      px(x, y+10, TREE_B, 2, 8);
+      // leaves - palm tree style (3 layers)
+      px(x-4, y+2, TREE_D, 10, 4);
+      px(x-3, y, TREE_T, 8, 4);
+      px(x-2, y-2, TREE_T, 6, 3);
+      // fronds
+      px(x-6, y+1, TREE_T, 4, 2);
+      px(x+4, y+1, TREE_T, 4, 2);
+      px(x-5, y-1, TREE_D, 3, 2);
+      px(x+4, y-1, TREE_D, 3, 2);
+    }
+
+    function drawLamp(x) {
+      if (x < -5 || x > W+5) return;
+      px(x, 44, LAMP_POST, 2, 20);
+      px(x-2, 42, LAMP_POST, 6, 2);
+      // light glow
+      ctx.globalAlpha = 0.4;
+      px(x-1, 40, LAMP_LIGHT, 4, 4);
+      ctx.globalAlpha = 1;
+    }
+
+    function drawPerson(x, y, walk, shirt, pants, skin, hair, flip) {
+      const legSwing = [0,1,0,-1][walk];
+      // Head
+      px(x, y, skin, 4, 4);
+      // Hair
+      px(x, y-1, hair, 4, 2);
+      px(x-1, y, hair, 1, 2);
+      px(x+4, y, hair, 1, 2);
+      // Body (shirt)
+      px(x-1, y+4, shirt, 6, 5);
+      // Arms swing
+      px(x-2, y+4+legSwing, shirt, 2, 4);
+      px(x+5, y+4-legSwing, shirt, 2, 4);
+      // Legs
+      px(x, y+9, pants, 2, 4+legSwing);
+      px(x+2, y+9, pants, 2, 4-legSwing);
+      // Feet
+      px(x-1, y+13+legSwing, '#222', 3, 2);
+      px(x+2, y+13-legSwing, '#222', 3, 2);
+    }
+
+    let frame = 0;
+    function animate() {
+      frame++;
+      drawScene(frame);
+      requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 
 </body>
