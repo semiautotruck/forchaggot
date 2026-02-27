@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost — For You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --gold: #c9a96e; --rust: #b5704a; --sage: #8a9e8c; --slate: #5a6670; --ink: #2d2a26; --accent: #7a9e93; }
+    body { min-height: 100vh; background: linear-gradient(160deg, #e8f2f0 0%, #f5f0ea 60%, #edf5f2 100%); font-family: 'Lora', Georgia, serif; color: var(--ink); display: flex; flex-direction: column; align-items: center; padding: 60px 24px 80px; }
+    .back { position: fixed; top: 24px; left: 24px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--slate); text-decoration: none; letter-spacing: 0.1em; opacity: 0.6; transition: opacity 0.2s; }
+    .back:hover { opacity: 1; }
+    .mood-tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; text-align: center; max-width: 560px; line-height: 1.3; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    h1 em { font-style: italic; color: var(--rust); }
+    .subhead { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--slate); text-align: center; margin-bottom: 50px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+    .card { background: white; border: 1px solid rgba(122,158,147,0.2); border-radius: 6px; padding: 32px 36px; max-width: 520px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.8s ease var(--delay, 0.8s) forwards; }
+    .card h2 { font-size: 13px; font-family: 'DM Mono', monospace; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .card p { font-size: 16px; line-height: 1.75; }
+    .card p + p { margin-top: 12px; }
+    .grounding { background: white; border: 1px solid rgba(122,158,147,0.2); border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 1.1s forwards; }
+    .grounding h2 { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+    .ground-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+    .ground-num { font-family: 'DM Mono', monospace; font-size: 20px; color: var(--accent); opacity: 0.4; min-width: 28px; }
+    .ground-text { font-size: 15px; line-height: 1.6; color: var(--slate); }
+    .emergency { background: var(--ink); border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; text-align: center; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 1.4s forwards; }
+    .emergency p { color: rgba(250,246,240,0.7); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; margin-bottom: 20px; }
+    .emergency-btn { background: var(--accent); color: white; border: none; padding: 16px 32px; font-family: 'Lora', serif; font-size: 16px; border-radius: 4px; cursor: pointer; transition: all 0.2s; width: 100%; }
+    .emergency-btn:hover { background: var(--rust); transform: scale(1.02); }
+    .note-display { color: white; font-size: 18px; line-height: 1.6; margin-top: 20px; min-height: 60px; font-style: italic; opacity: 0; transition: opacity 0.5s; }
+    .note-display.visible { opacity: 1; }
+    .nav-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 520px; margin-top: 10px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
+    .nav-pills a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--slate); text-decoration: none; border: 1px solid rgba(90,102,112,0.3); border-radius: 20px; padding: 6px 14px; transition: all 0.2s; }
+    .nav-pills a:hover { color: var(--ink); border-color: var(--accent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+  <p class="mood-tag">🌧 I don't know what I'm feeling</p>
+  <h1>Not knowing is <em>okay</em><br> chaggot. You don't have to name it. You're pretty stupid, but you're not being stupid right now.</h1>
+  <p class="subhead">just be here and that's enough.</p>
+
+  <div class="card" style="--delay:0.7s">
+    <h2>From me to you</h2>
+    <p>Sometimes the feeling is, as you described, just a heaviness. Kind of like the fog in San Francisco rolling over the hills. Or you just feel like complete dog shit, but you can't exactly pinpoint why. I myself am notoriously bad at processing feelings, and that's completely valid. You don't have to diagnose it or label it or fix it right now.</p>
+    <p>I just want you to know that you can bring that to me. Always. Even if all you can text is "I feel like shit right now but idk why." I get it, and you know that I'll always get it even if we're too stupid to understand. I like understanding the way someone feels even if I can't feel it myself. It's like a puzzle to me, so don't feel like you're burdening me. Sometimes you're very bold with annoying me, but other times you are more reserved about it. You do a good job of ragebaiting me, so I'm very patient with you. Use that to your advantage. I give you that privilege because I care about you that much.</p>
+  </div>
+
+  <div class="grounding">
+    <h2>Ground yourself — right now. It's not stupid. DO IT!!!!</h2>
+    <div class="ground-item">
+      <span class="ground-num">5</span>
+      <span class="ground-text">things you can <strong>see</strong> around you right now (even if it's your horrendous room or Jed's American flag).</span>
+    </div>
+    <div class="ground-item">
+      <span class="ground-num">4</span>
+      <span class="ground-text">things you can <strong>touch</strong>. Actually touch them.</span>
+    </div>
+    <div class="ground-item">
+      <span class="ground-num">3</span>
+      <span class="ground-text">things you can <strong>hear.</strong> Even quiet ones (even if it's Ian's shitty ass music).</span>
+    </div>
+    <div class="ground-item">
+      <span class="ground-num">2</span>
+      <span class="ground-text">things you can <strong>smell</strong>, or want to smell (and not Ibrahim's stinky fart).</span>
+    </div>
+    <div class="ground-item">
+      <span class="ground-num">1</span>
+      <span class="ground-text">thing you're <strong>grateful for</strong> right now. Just one.</span>
+    </div>
+  </div>
+
+  <div class="card" style="--delay:1.0s">
+    <h2>Something true</h2>
+    <p>On the days when everything feels like static, that's when the small things matter most. Like the feel of your bed or sunlight through a window. I know I constantly complain about Stanford, but I feel so grateful to wake up to the sweet Californian air. It's gorgeous and I feel like I'm on a four-year vacation. Do you understand how lucky we are? It doesn't mean that we have to be happy 24/7, but I want you to try to look on the bright side. It takes practice... I used to be so negative that I would just make myself depressed. Now, as you know, I'm an optimistic nihilist, and that title serves me well.</p>
+    <p>I truly believe that feeling depressed is partially choice, even if the tides are against you. Feeling lost on the other hand, is not necessarily a choice unless you wallow in negativity. Think about why exactly you feel lost, and if you don't come to a conclusion, that's alright. Trace your thoughts back to what's keeping you in this state of limbo. Find one thing that makes you happy, and embrace that as your anchor. For me, when I get overwhelmed or feel lost, I take a trip to a completely new environment. Somewhere expansive, where I can seek out an experience that I can learn something new from. That gives me a sense of freedom that contrasts our parents trying to unintentionally restrict our choices and our school from trapping us inside this small techbro bubble.</p>
+    <p>You don't have to feel okay right now. Just let yourself be here, in this moment, in this body, and know that I'm thinking about you.</p>
+  </div>
+
+  <div class="emergency">
+    <p>click when you need something good</p>
+    <button class="emergency-btn" onclick="showNote()">✦ Click if you need to hear something good ✦</button>
+    <div class="note-display" id="noteDisplay"></div>
+  </div>
+
+  <div class="nav-pills">
+    <a href="memories.html">🫶 Our memories</a>
+    <a href="stressed.html">💭 Actually stressed</a>
+    <a href="sad.html">😞 Actually sad</a>
+    <a href="index.html">↩ Start over</a>
+  </div>
+
+  <script>
+    const notes = [
+     
+      "Go rest!!!!",
+      "I am proud of you for trying even though you know you suck sometimes.",
+      "You don't have to perform right now. Just don't play league!!!",
+      "You are not behind. In fact, you are light years ahead of where I am right now.",
+      "Your value is never going to be productivity.",
+      "Being tired is never going to be a failure.",
+      "Bitch go eat some good ass food. NOT ARRILLAGA!",
+      "I am thinking about you many times throughout my day, even when I'm not there.",
+      "You've endured Satan's asshole before. You'll endure this too.",
+      "Bitch stop playing League and go outside!!!!",
+      "You are someone I genuinely admire, no matter how many stupid things you do.",
+      "The fact that you care this much is actually why you are such a competent person.",
+      "Stop trying to please these fake ass bitches.",
+      "Progress is unlikely to be visible. You're still moving. You just have to pick up the pace.",
+      "I see you working, and I see you trying. I'm proud.",
+      "Bitch stop scrolling. Go outside or play in the sand. Come back.",
+      "You are someone worth taking care of, so take care of yourself. If you feel chopped, don't just complain.",
+      "Get off your ass and do that one task you need to do. That's all you need to do right now.",
+      "Come ask me to sit in the library or outside with you. I'll do it if I can.",
+      "Being overwhelmed doesn't mean you're a stupid chud.",
+      "You have surprisingly survived 100% of your hard days. That's your record, so keep it that way.",
+      "The stress is real, and you are also stronger than it (although you are forever a twink).",
+      "It's okay to ask for help. Your amazing chaggot is here for you.",
+      "You are not alone in this. Guess what? Your amazing chaggot is probably going through some shit too.",
+      "Future you will thank present you for resting. Go get some sleep bitch.",
+      "Your brain needs breaks. You are not a lazy person. You might be distracted, so lock the fuck in.",
+      "I'm rooting for you always.",
+      "Bitch go outside!!!!",
+      "You matter to me, even if your grades are shit. Even if you have the best grades ever. In fact, I might hate you even more if you have better grades than me (which you probably do)!",
+    ];
+    function showNote() {
+      const el = document.getElementById('noteDisplay');
+      el.classList.remove('visible');
+      setTimeout(() => { el.textContent = '"' + notes[Math.floor(Math.random() * notes.length)] + '"'; el.classList.add('visible'); }, 300);
+    }
+  </script>
+</body>
+</html>

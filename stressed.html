@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stressed — For You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #faf6f0;
+      --gold: #c9a96e;
+      --rust: #b5704a;
+      --sage: #8a9e8c;
+      --slate: #5a6670;
+      --ink: #2d2a26;
+      --accent: #7a9bb5;
+    }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #e8f0f5 0%, #f5f0ea 60%, #eef3ee 100%);
+      font-family: 'Lora', Georgia, serif;
+      color: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 60px 24px 80px;
+    }
+    .back { position: fixed; top: 24px; left: 24px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--slate); text-decoration: none; letter-spacing: 0.1em; opacity: 0.6; transition: opacity 0.2s; }
+    .back:hover { opacity: 1; }
+    .mood-tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; text-align: center; max-width: 560px; line-height: 1.3; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    h1 em { font-style: italic; color: var(--rust); }
+    .subhead { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--slate); text-align: center; margin-bottom: 50px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+    .card { background: white; border: 1px solid rgba(201,169,110,0.2); border-radius: 6px; padding: 32px 36px; max-width: 520px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.8s ease var(--delay, 0.8s) forwards; }
+    .card h2 { font-size: 13px; font-family: 'DM Mono', monospace; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .card p { font-size: 16px; line-height: 1.75; color: var(--ink); }
+    .card p + p { margin-top: 12px; }
+    .breathing { background: white; border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.8s ease 1.2s forwards; }
+    .breathing h2 { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 24px; }
+    .breath-circle { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, rgba(122,155,181,0.3), rgba(122,155,181,0.05)); border: 2px solid rgba(122,155,181,0.3); margin: 0 auto 20px; animation: breathe 8s ease-in-out infinite; }
+    .breath-label { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--slate); letter-spacing: 0.1em; }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.4); opacity: 1; }
+    }
+    .emergency { background: var(--ink); border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; text-align: center; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 1.4s forwards; }
+    .emergency p { color: rgba(250,246,240,0.7); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; margin-bottom: 20px; }
+    .emergency-btn { background: var(--gold); color: var(--ink); border: none; padding: 16px 32px; font-family: 'Lora', serif; font-size: 16px; border-radius: 4px; cursor: pointer; transition: all 0.2s; width: 100%; }
+    .emergency-btn:hover { background: var(--rust); color: white; transform: scale(1.02); }
+    .note-display { color: white; font-size: 18px; line-height: 1.6; margin-top: 20px; min-height: 60px; font-style: italic; opacity: 0; transition: opacity 0.5s; }
+    .note-display.visible { opacity: 1; }
+    .nav-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 520px; margin-top: 10px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
+    .nav-pills a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--slate); text-decoration: none; border: 1px solid rgba(90,102,112,0.3); border-radius: 20px; padding: 6px 14px; transition: all 0.2s; }
+    .nav-pills a:hover { color: var(--ink); border-color: var(--gold); background: rgba(201,169,110,0.08); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+  <p class="mood-tag">💭 I'm stressed</p>
+  <h1>Womp womp. But don't worry. You are not <em>behind.</em></h1>
+  <p class="subhead">let's slow down together just for a minute.</p>
+
+  <div class="card" style="--delay:0.7s">
+    <h2>From me to you</h2>
+    <p>I've watched you handle more than literally every other person at Stanford so far. I know it has not been too long, but I see how hardworking you are. I know right now your brain is probably running through a list of everything that feels like complete shit, but just know that I literally went bald my first quarter.</p>
+    <p>Can you just close the list for a second? You don't have to solve anything right now. So yeah, fuck that summer internship because you don't need it. You are one of the most impressive people I know because of how you are able to see so much in the world. That's why you are objectively in my top 3 favorite humans. So shut the fuck up for a second and breathe.</p>
+  </div>
+
+  <div class="breathing">
+    <h2>Do the breathing. DO IT!!!! </h2>
+    <div class="breath-circle"></div>
+    <p class="breath-label">expand with it · release with it</p>
+  </div>
+
+  <div class="card" style="--delay:1.0s">
+    <h2>A reminder</h2>
+    <p>I don't know how we did it, but we got into Stanford. We are in literal paradise — just look outside with those chinky eyes. The palm trees. The sky (which is probably sunny). The sweet air. And the beach and city are right around the corner. You are still here, and we got through every single hard week before this one. We have had so many shit days together. Do you remember the time you literally had green pus oozing out from your eyes? Or the time where you had to stay up for 2 days straight for Econ and Math? Or the time where we literally got pulled over and butt-fucked by 2 cops within the span of 2 weeks? Or what about the time where Maria laughed at you in front of everyone? Or when all of the chinks in our dorm judged you? This one is no different. You are so much more capable than the stressed version of you believes right now.</p>
+    <p>I'm serious. I've seen you, and I'm not the type of person to fabricate the truth for you. You're going to be okay because I have THAT much faith in you. I would not choose to be best friends with a weak and undetermined person.</p>
+  </div>
+
+  <div class="emergency">
+    <p>click when you need something good</p>
+    <button class="emergency-btn" onclick="showNote()">✦ Click if you need to hear something that could potentially make you happier ✦</button>
+    <div class="note-display" id="noteDisplay"></div>
+  </div>
+
+  <div class="nav-pills">
+    <a href="memories.html">🫶 Our memories</a>
+    <a href="sad.html">😞 I'm also sad</a>
+    <a href="index.html">↩ Start over</a>
+  </div>
+
+  <script>
+    const notes = [
+      "Go rest!!!!",
+      "I am proud of you for trying even though you know you suck sometimes.",
+      "You don't have to perform right now. Just don't play league!!!",
+      "You are not behind. In fact, you are light years ahead of where I am right now.",
+      "Your value is never going to be productivity.",
+      "Being tired is never going to be a failure.",
+      "Bitch go eat some good ass food. NOT ARRILLAGA!",
+      "I am thinking about you many times throughout my day, even when I'm not there.",
+      "You've endured Satan's asshole before. You'll endure this too.",
+      "Bitch stop playing League and go outside!!!!",
+      "You are someone I genuinely admire, no matter how many stupid things you do.",
+      "The fact that you care this much is actually why you are such a competent person.",
+      "Stop trying to please these fake ass bitches.",
+      "Progress is unlikely to be visible. You're still moving. You just have to pick up the pace.",
+      "I see you working, and I see you trying. I'm proud.",
+      "Bitch stop scrolling. Go outside or play in the sand. Come back.",
+      "You are someone worth taking care of, so take care of yourself. If you feel chopped, don't just complain.",
+      "Get off your ass and do that one task you need to do. That's all you need to do right now.",
+      "Come ask me to sit in the library or outside with you. I'll do it if I can.",
+      "Being overwhelmed doesn't mean you're a stupid chud.",
+      "You have surprisingly survived 100% of your hard days. That's your record, so keep it that way.",
+      "The stress is real, and you are also stronger than it (although you are forever a twink).",
+      "It's okay to ask for help. Your amazing chaggot is here for you.",
+      "You are not alone in this. Guess what? Your amazing chaggot is probably going through some shit too.",
+      "Future you will thank present you for resting. Go get some sleep bitch.",
+      "Your brain needs breaks. You are not a lazy person. You might be distracted, so lock the fuck in.",
+      "I'm rooting for you always.",
+      "Bitch go outside!!!!",
+      "You matter to me, even if your grades are shit. Even if you have the best grades ever. In fact, I might hate you even more if you have better grades than me (which you probably do)!",
+    ];
+    function showNote() {
+      const el = document.getElementById('noteDisplay');
+      el.classList.remove('visible');
+      setTimeout(() => {
+        el.textContent = '"' + notes[Math.floor(Math.random() * notes.length)] + '"';
+        el.classList.add('visible');
+      }, 300);
+    }
+  </script>
+</body>
+</html>

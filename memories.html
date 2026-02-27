@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Memories — Stanford</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #faf6f0;
+      --gold: #c9a96e;
+      --rust: #b5704a;
+      --sage: #8a9e8c;
+      --slate: #5a6670;
+      --ink: #2d2a26;
+      --warm: #f2e8d9;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--cream);
+      background-image: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201,169,110,0.1) 0%, transparent 60%);
+      font-family: 'Lora', Georgia, serif;
+      color: var(--ink);
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 60px 24px 30px;
+      position: relative;
+    }
+    .back {
+      position: absolute; top: 28px; left: 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--slate);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .back:hover { opacity: 1; }
+    header .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    header h1 em { font-style: italic; color: var(--rust); }
+    header .sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--slate);
+      margin-top: 10px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    /* ── GRID ── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin: 30px 0 18px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .gallery-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.0s forwards;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
+    }
+
+    .tile {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+      border: 1px solid rgba(201,169,110,0.15);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      aspect-ratio: 1 / 1;
+    }
+    .tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 26px rgba(0,0,0,0.10);
+    }
+
+    .tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+    }
+
+    .tile .badge {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.9);
+      background: rgba(45,42,38,0.55);
+      padding: 5px 8px;
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* ── MODAL ── */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 999;
+    }
+    .modal.open { display: flex; }
+
+    .modal-card {
+      width: min(980px, 100%);
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      border: 1px solid rgba(201,169,110,0.25);
+      position: relative;
+    }
+
+    .modal-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(201,169,110,0.22);
+      background: linear-gradient(180deg, rgba(250,246,240,0.9), rgba(255,255,255,0.9));
+    }
+    .modal-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .icon-btn {
+      border: 1px solid rgba(90,102,112,0.25);
+      background: white;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .icon-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(201,169,110,0.7);
+    }
+
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 0;
+    }
+
+    .modal-photo {
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-photo img {
+      width: 100%;
+      height: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .modal-note {
+      padding: 18px 18px 22px;
+      background: radial-gradient(ellipse 120% 100% at 20% 10%, rgba(201,169,110,0.10) 0%, transparent 55%);
+    }
+    .note-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .note-text {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--slate);
+      white-space: pre-wrap;
+    }
+
+    .note-hint {
+      margin-top: 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: rgba(90,102,112,0.75);
+    }
+
+    @media (max-width: 860px) {
+      .modal-body { grid-template-columns: 1fr; }
+      .modal-photo img { max-height: 60vh; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px 24px 60px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--slate);
+      opacity: 0.6;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="back" href="index.html">← back</a>
+    <p class="tag">Stanford Memory Collage</p>
+    <h1>Us, <em>so far.</em></h1>
+    <p class="sub">click any photo when you miss us.</p>
+  </header>
+
+  <p class="section-label">✦ the whole collage ✦</p>
+
+  <div class="gallery-wrap">
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <footer>Stanford · built with love · for when you need it</footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-topbar">
+        <div class="modal-title" id="modalTitle">Memory</div>
+        <div class="modal-actions">
+          <button class="icon-btn" id="prevBtn">← Prev</button>
+          <button class="icon-btn" id="nextBtn">Next →</button>
+          <button class="icon-btn" id="closeBtn">Close ✕</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-photo">
+          <img id="modalImg" alt="Memory photo" />
+        </div>
+        <div class="modal-note">
+          <div class="note-label">note from me</div>
+          <div class="note-text" id="modalNote">No note yet. Add one in the notes object in the script when you’re ready.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === FILE EXTENSIONS (from Kayla's mapping) ===
+    const pngSet = new Set([4,7,16,19,21,23,25,26,44,46,48,50,71]);
+    const jpgSet = new Set([1,2,3,6,9,17,20,22,24,42,43,45,47,49,51,52,53,68,70,73]);
+    // Everything else default to .jpeg (change to .jpg if your files are .jpg)
+    // IMPORTANT: Use the extension that actually exists on disk.
+    function extFor(n) {
+      if (pngSet.has(n)) return "png";
+      if (jpgSet.has(n)) return "jpg";
+      return "jpeg";
+    }
+
+    // === OPTIONAL NOTES: add later as you write them ===
+    // Example: notes[1] = "The Oval. Golden hour. You were talking and I felt lucky.";
+    const notes = {
+      1: "Halloween with Carrot and Jason the Ween. They look so unbelievably stupid",
+      2: "We went to the library 2 times the entire quarter. We got, you guessed it, no work done. And we were studying for Math 21. At least I had you there, because I genuinely would have shot myself",
+      3: "Fucking David. I literally get mad every time I see him",
+      4: "Thank you so much for this",
+      5: "I saw this on a solo trip to the De Young Museum. You were sleeping, of course. This painting was lowkey shit, but I still liked it because of how crisp the colors were. Lowkey reminded me of us (but you're not Black unfortunately)",
+      6: "Quarter 1 Neal impression",
+      7: "Pretty accurate, no?",
+      8: "Asian Art museum. Korea got mogged by every other country",
+      9: "Carrot",
+      10: "This shit genuinely made me cream my pants",
+      11: "Fuck ass Tressider",
+      12: "Your fat ass",
+      13: "Hikari (I still don't understand a single thing she was saying)",
+      14: "Pre-loft bed",
+      15: "I love the sun at Stanford. Bike ride in fall was so nice. Took this first couple of weeks at Stanford before things went to shit",
+      16: "I genuinely could not stop laughing at Tamil",
+      17: "I miss my hair bro",
+      18: "We were walking around the pier at night and we stopped by the Ghirardelli store. We wasted money on shit hot chocolate, but it was so worth it",
+      19: "The worst class I have ever taken in my entire life",
+      20: "Maria",
+      21: "Who the fuck is Thomas",
+      22: "Holy shit it's Ishaan",
+      23: "Thanks again for this",
+      24: "I literally look like Lord Farquad",
+      25: "I wonder if we are still single by the end of sophomore year. Just get with Trin at this point",
+      26: "No words needed to convey my hatred",
+      27: "We were walking around downtown Palo Alto when we saw this adorable cat at the local cat cafe. He reminded me of my cats back at home. Sometimes, I miss my family. I assume it's the same for you too, huh?",
+      28: "These magnets are still on my fridge btw",
+      29: "1 of 2 times we went the gym. I don't know what the fuck I was doing but I ended up with all these bruises. And genuinely for what",
+      30: "Can you believe these are our friends",
+      31: "One of the views I showed you sandwiched between the Financial District and Chinatown. We were on the rooftop. Out of all the friends I have brought up here (when they came to visit me), you were the first to come here with me. We had gotten matcha at the cafe downstairs and it came in these small glass jars. The jars are still there in the stairwell to my knowledge. I felt a genuine sense of peace up here and we didn't even have to talk",
+      32: "We were at Kinokuniya bookstore in Japan town. I don't remember if we were having ramen there or not, but we sat on the floor while I tutored. Afterwards, you had to call the chinks from COLLEGE 102. I will never forget how dumb our classmates were in that class",
+      33: "Hollow carrot",
+      34: "We were on that rooftop I took you to in downtown SF. We were watching workers wrap up their shifts in the business building beside the church. I wonder if that will be you and I one day. I hope we don't end up corporate slaves",
+       35: "Dustin's cat. We were invited to Dustin's house for the COLLEGE 102 dinner and we had the privilege of meeting his adorable cat. I will never forget that 3 hour long conversation we had with Dustin and Dev, where we dumped all our vulnerabilities about Stanford's tech culture into their laps. Dustin's cat makes me miss my own cats back at home (again)",
+      36: "Quarter 2 Valentine's day. We were so lonely we had to get each other Valentine's day presents, and we also got into our first major argument that day (over Super Idol). I went to Whole Foods after babysitting Tyler for his hair appointment, and unintentionally picked up a gift for you",
+      37: "It's fucking David again",
+      38: "My faggy car's battery was genuinely on life support. I had to go check my car's battery and jump start it 4 times that day. I almost had a panic attack because I got stranded in the Chipotle parking lot. This was such a terrible day bro",
+      39: "Our first adventure to In N' Out. I remember that it was your first time at an In N' Out in general.", 
+      40: "Korean food post-tutor session. This was in Redwood City I'm pretty sure",
+      41: "Our favorite teacher!!!!",
+      42: "Andrew Bell's Zoom class. I literally could not stop laughing during this Zoom",
+      43: "Our matching beanies. They are pretty cute honestly",
+      44: "No words needed again",
+      45: "Your sausage eyes",
+      46: "Rinc diversity",
+      47: "NSO was truly a time. Sage bruh holy", 
+      48: "My call logs are literally just populated by you",
+      49: "I think this was NSO, too? We were fat and only went for the food",
+      50: "I'm literally a boyfriend and I'm not even trans",
+      51: "What the hell why do I look like that",
+      52: "Okay now why do YOU look like that",
+      53: "Our Halloween costumes. We got made fun of at the first party we went to. It was so boring and sweaty and loud. Never again are we going to a Frat party like that",
+      54: "Our Armed Conflict fine shit",
+      55: "I took you to Coit Tower and the Filbert steps in SF. The skyline was gorgeous and we got to see all the mansions on the way up the stairs. Some day, will we be renting those apartments out?",
+      56: "We went to the pier at night after Ghirardelli",
+      57: "We went into Satan's asshole (Half Moon Bay) in the dead of night. The waves were so calming. But I also remember that you got pissed off though which was absolutely amazing",
+      58: "Our friends",
+      59: "Our first Dave's run...",
+      60: "Stanford's palms. I love the palm trees so much. I really thought that I was dreaming when I was driving past Palm Drive for the first time",
+      61: "Walking outside of Wallenberg's basement on a rainy day. Although I love breathing in the petrichor after it rains, I HATE biking through wetness",
+      62: "We visited the City Lights bookstore in Chinatown. This is one of my favorite bookstores in the city. I remember you were scrolling the entire time. I wish I could sit down and actually read here again",
+      63: "Literal Resident Evil meal from Arrillaga",
+      64: "Leaving our Armed Conflict class. Life is good when I don't have to listen to the stupid chinks in that classroom",
+      65: "My baby. I had to take him to Stress-Free Auto Care on Menlo Park, and the mechanics literally lied to me. They also overcharged me and I had one of the worst days of Quarter 2 here because of the pain my Check Engine light was causing me",
+      66: "Your teepee",
+      67: "This was a little after NSO I believe. We were trying to take a picture to send to our parents because they were worried about us",
+      68: "Our favorite teacher. Part 2",
+      69: "Stanford at sunset. This was one of prettiest days I recall on campus. I'm not sure if you saw it, too",
+      70: "I miss when I actually had hair",
+      71: "Thank you Raymond for providing us with the least helpful information known to man",
+      72: "I don't even know what to say",
+      73: "Your second time doing my makeup",
+                };
+
+    const TOTAL = 73;
+    const grid = document.getElementById('galleryGrid');
+
+    const items = [];
+    for (let i = 1; i <= TOTAL; i++) {
+      const src = `img/${i}.${extFor(i)}`;
+      items.push({ i, src });
+
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.setAttribute('data-index', String(i));
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `Memory ${i}`;
+      img.loading = 'lazy';
+
+      const badge = document.createElement('div');
+      badge.className = 'badge';
+      badge.textContent = `#${i}`;
+
+      tile.appendChild(img);
+      tile.appendChild(badge);
+      tile.addEventListener('click', () => openModal(i));
+
+      grid.appendChild(tile);
+    }
+
+    // === MODAL LOGIC ===
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalNote = document.getElementById('modalNote');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let current = 1;
+
+    function setModal(n) {
+      current = n;
+      const src = `img/${n}.${extFor(n)}`;
+      modalImg.src = src;
+      modalTitle.textContent = `Memory #${n}`;
+      modalNote.textContent = notes[n] || "No note yet. Add one in the notes object in the script when you’re ready.";
+    }
+
+    function openModal(n) {
+      setModal(n);
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function prev() {
+      const n = current <= 1 ? TOTAL : current - 1;
+      setModal(n);
+    }
+
+    function next() {
+      const n = current >= TOTAL ? 1 : current + 1;
+      setModal(n);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    });
+  </script>
+
+</body>
+</html>

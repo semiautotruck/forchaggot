@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sad — For You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream: #faf6f0; --gold: #c9a96e; --rust: #b5704a; --sage: #8a9e8c; --slate: #5a6670; --ink: #2d2a26; --accent: #9e85b5; }
+    body { min-height: 100vh; background: linear-gradient(160deg, #f0ecf7 0%, #f5f0ea 60%, #eef3ee 100%); font-family: 'Lora', Georgia, serif; color: var(--ink); display: flex; flex-direction: column; align-items: center; padding: 60px 24px 80px; }
+    .back { position: fixed; top: 24px; left: 24px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--slate); text-decoration: none; letter-spacing: 0.1em; opacity: 0.6; transition: opacity 0.2s; }
+    .back:hover { opacity: 1; }
+    .mood-tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; text-align: center; max-width: 560px; line-height: 1.3; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    h1 em { font-style: italic; color: var(--rust); }
+    .subhead { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--slate); text-align: center; margin-bottom: 50px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+    .card { background: white; border: 1px solid rgba(158,133,181,0.2); border-radius: 6px; padding: 32px 36px; max-width: 520px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.8s ease var(--delay, 0.8s) forwards; }
+    .card h2 { font-size: 13px; font-family: 'DM Mono', monospace; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .card p { font-size: 16px; line-height: 1.75; }
+    .card p + p { margin-top: 12px; }
+    .rain { text-align: center; font-size: 40px; letter-spacing: 8px; margin: 4px 0 24px; opacity: 0.5; animation: rain 3s ease-in-out infinite alternate; }
+    @keyframes rain { from { opacity: 0.3; transform: translateY(-3px); } to { opacity: 0.7; transform: translateY(3px); } }
+    .emergency { background: var(--ink); border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; text-align: center; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 1.4s forwards; }
+    .emergency p { color: rgba(250,246,240,0.7); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; margin-bottom: 20px; }
+    .emergency-btn { background: var(--accent); color: white; border: none; padding: 16px 32px; font-family: 'Lora', serif; font-size: 16px; border-radius: 4px; cursor: pointer; transition: all 0.2s; width: 100%; }
+    .emergency-btn:hover { background: var(--rust); transform: scale(1.02); }
+    .note-display { color: white; font-size: 18px; line-height: 1.6; margin-top: 20px; min-height: 60px; font-style: italic; opacity: 0; transition: opacity 0.5s; }
+    .note-display.visible { opacity: 1; }
+    .nav-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 520px; margin-top: 10px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
+    .nav-pills a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--slate); text-decoration: none; border: 1px solid rgba(90,102,112,0.3); border-radius: 20px; padding: 6px 14px; transition: all 0.2s; }
+    .nav-pills a:hover { color: var(--ink); border-color: var(--accent); background: rgba(158,133,181,0.08); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+  <div class="rain">🌧</div>
+  <p class="mood-tag">😞 I'm sad</p>
+  <h1>Sadness doesn't make you a failure.<br>It means you <em>feel things</em> deeply, and I see no problem with that. That's what I like about you anyway.</h1>
+  <p class="subhead">you're allowed to be here for a while, okay?</p>
+
+  <div class="card" style="--delay:0.7s">
+    <h2>From me to you</h2>
+    <p>I wish I could be there with you. I'd make you sit down with me, probably make you eat something (NOT ARRILLAGA), and we'd just exist together because that's what I love the most with you. You wouldn't have to talk if you didn't want to. Sometimes, I like it better that way, and I know you do too.</p>
+    <p>Since I can't, I want you to know: whatever is making you sad right now is real. You don't have to reframe it or fix it immediately because that's not the point of thinking through life. You can just feel it.</p>
+    <p>And also: I love you chaggot, and this feeling won't stay forever. It always passes, and you always come back.</p>
+  </div>
+
+  <div class="card" style="--delay:1.0s">
+    <h2>A small thing I want you to do</h2>
+    <p>Put your hand on your chest and feel your heartbeat. You're here. You're still showing up. Even when it's hard, you show up — and I find that brave. I wish that you were always happy because I have spent so much of my good and bad days with you... But when you are happy, it is likely that I am happy too by association.</p>
+    <p>Now: drink some water. Not because it'll fix shit, but because you deserve to be taken care of, and right now I want you to do that for yourself.</p>
+  </div>
+
+  <div class="card" style="--delay:1.1s">
+    <h2>Things that are still true</h2>
+    <p>The Oval still looks the same. Arillaga is still shit. Actually no, Wilbur is more shit. You are still one of the funniest, most genuine people I know. Palm Drive still exists. I still almost went bald (but I hopefully have hair now). We still have so many memories left to make. I am still here.</p>
+  </div>
+
+  <div class="emergency">
+    <p>click when you need something good</p>
+    <button class="emergency-btn" onclick="showNote()">✦ Click if you need to hear something good ✦</button>
+    <div class="note-display" id="noteDisplay"></div>
+  </div>
+
+  <div class="nav-pills">
+    <a href="memories.html">🫶 Our memories</a>
+    <a href="stressed.html">💭 I'm also stressed</a>
+    <a href="index.html">↩ Start over</a>
+  </div>
+
+  <script>
+    const notes = [
+     
+      "Go rest!!!!",
+      "I am proud of you for trying even though you know you suck sometimes.",
+      "You don't have to perform right now. Just don't play league!!!",
+      "You are not behind. In fact, you are light years ahead of where I am right now.",
+      "Your value is never going to be productivity.",
+      "Being tired is never going to be a failure.",
+      "Bitch go eat some good ass food. NOT ARRILLAGA!",
+      "I am thinking about you many times throughout my day, even when I'm not there.",
+      "You've endured Satan's asshole before. You'll endure this too.",
+      "Bitch stop playing League and go outside!!!!",
+      "You are someone I genuinely admire, no matter how many stupid things you do.",
+      "The fact that you care this much is actually why you are such a competent person.",
+      "Stop trying to please these fake ass bitches.",
+      "Progress is unlikely to be visible. You're still moving. You just have to pick up the pace.",
+      "I see you working, and I see you trying. I'm proud.",
+      "Bitch stop scrolling. Go outside or play in the sand. Come back.",
+      "You are someone worth taking care of, so take care of yourself. If you feel chopped, don't just complain.",
+      "Get off your ass and do that one task you need to do. That's all you need to do right now.",
+      "Come ask me to sit in the library or outside with you. I'll do it if I can.",
+      "Being overwhelmed doesn't mean you're a stupid chud.",
+      "You have surprisingly survived 100% of your hard days. That's your record, so keep it that way.",
+      "The stress is real, and you are also stronger than it (although you are forever a twink).",
+      "It's okay to ask for help. Your amazing chaggot is here for you.",
+      "You are not alone in this. Guess what? Your amazing chaggot is probably going through some shit too.",
+      "Future you will thank present you for resting. Go get some sleep bitch.",
+      "Your brain needs breaks. You are not a lazy person. You might be distracted, so lock the fuck in.",
+      "I'm rooting for you always.",
+      "Bitch go outside!!!!",
+      "You matter to me, even if your grades are shit. Even if you have the best grades ever. In fact, I might hate you even more if you have better grades than me (which you probably do)!",
+    ];
+    function showNote() {
+      const el = document.getElementById('noteDisplay');
+      el.classList.remove('visible');
+      setTimeout(() => { el.textContent = '"' + notes[Math.floor(Math.random() * notes.length)] + '"'; el.classList.add('visible'); }, 300);
+    }
+  </script>
+</body>
+</html>

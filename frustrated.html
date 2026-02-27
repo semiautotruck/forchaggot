@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frustrated — For You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream: #faf6f0; --gold: #c9a96e; --rust: #b5704a; --sage: #8a9e8c; --slate: #5a6670; --ink: #2d2a26; --accent: #c97a5a; }
+    body { min-height: 100vh; background: linear-gradient(160deg, #f7ede8 0%, #f5f0ea 60%, #f2eeea 100%); font-family: 'Lora', Georgia, serif; color: var(--ink); display: flex; flex-direction: column; align-items: center; padding: 60px 24px 80px; }
+    .back { position: fixed; top: 24px; left: 24px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--slate); text-decoration: none; letter-spacing: 0.1em; opacity: 0.6; transition: opacity 0.2s; }
+    .back:hover { opacity: 1; }
+    .mood-tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; text-align: center; max-width: 560px; line-height: 1.3; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    h1 em { font-style: italic; color: var(--rust); }
+    .subhead { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--slate); text-align: center; margin-bottom: 50px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+    .card { background: white; border: 1px solid rgba(201,122,90,0.2); border-radius: 6px; padding: 32px 36px; max-width: 520px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.8s ease var(--delay, 0.8s) forwards; }
+    .card h2 { font-size: 13px; font-family: 'DM Mono', monospace; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .card p { font-size: 16px; line-height: 1.75; }
+    .card p + p { margin-top: 12px; }
+    .vent-box { background: white; border: 1px solid rgba(201,122,90,0.2); border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 1.1s forwards; }
+    .vent-box h2 { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .vent-box textarea { width: 100%; height: 120px; border: 1px solid rgba(201,122,90,0.2); border-radius: 4px; padding: 16px; font-family: 'Lora', serif; font-size: 15px; resize: none; color: var(--ink); background: var(--cream); outline: none; }
+    .vent-box textarea:focus { border-color: var(--accent); }
+    .vent-box .clear-btn { margin-top: 10px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--slate); background: none; border: none; cursor: pointer; text-transform: uppercase; opacity: 0.6; transition: opacity 0.2s; }
+    .vent-box .clear-btn:hover { opacity: 1; }
+    .vent-note { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--sage); margin-top: 10px; line-height: 1.5; }
+    .emergency { background: var(--ink); border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; text-align: center; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 1.4s forwards; }
+    .emergency p { color: rgba(250,246,240,0.7); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; margin-bottom: 20px; }
+    .emergency-btn { background: var(--accent); color: white; border: none; padding: 16px 32px; font-family: 'Lora', serif; font-size: 16px; border-radius: 4px; cursor: pointer; transition: all 0.2s; width: 100%; }
+    .emergency-btn:hover { background: var(--rust); transform: scale(1.02); }
+    .note-display { color: white; font-size: 18px; line-height: 1.6; margin-top: 20px; min-height: 60px; font-style: italic; opacity: 0; transition: opacity 0.5s; }
+    .note-display.visible { opacity: 1; }
+    .nav-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 520px; margin-top: 10px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
+    .nav-pills a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--slate); text-decoration: none; border: 1px solid rgba(90,102,112,0.3); border-radius: 20px; padding: 6px 14px; transition: all 0.2s; }
+    .nav-pills a:hover { color: var(--ink); border-color: var(--accent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+  <p class="mood-tag">😤 I'm frustrated</p>
+  <h1>Frustration means you <em>care.</em><br>That's not nothing. You are such a passionate person, so don't let that turn you into a petty bitch.</h1>
+  <p class="subhead">it's okay chaggot. let it out. i'm here.</p>
+
+  <div class="card" style="--delay:0.7s">
+    <h2>From me to you</h2>
+    <p>Frustration is just care that has nowhere to go. You care so much — about doing things right, about the people around you, about your own growth. You are still sticking to what you love, and in the sea of people at this weird ass school, that's a beautiful thing. Even when you are angry, I find that inspiring because you are blazing your own path. 
+    <p>We WILL succeed because we have suffered too fucking much to get caught up in petty shit. It's like getting mad at Axel or Emmie for looking at you weird. Why do you need to care about what they think? Shake your big fat ass in front of them and show them who's boss.</p>
+    <p>I know that whatever is making you angry or upset means that you genuinely care about it. Remember that first big argument we had on Valentine's day of Winter quarter? We were upset because we cared about each other. That is valid, and it makes our relationship so much stronger. Same thing with your career. You won't just give up, right? Because you care about these issues you are passionate about and you love debating them. So use this opportunity to fortify your mind and tackle your challenges. I know that you are a strong person (even if you are not strong physically).</p>
+    <p>Whatever triggered this doesn't define you. You are not your worst moment or this feeling. When you feel like shit, do something about it. Go outside, eat, game, or talk to someone.</p>
+  </div>
+
+  <div class="vent-box">
+    <h2>Vent box — private, just for you</h2>
+    <textarea id="ventArea" placeholder="Type whatever you're feeling. It won't be saved anywhere, and not even I can see it. Just let it out."></textarea>
+    <button class="clear-btn" onclick="document.getElementById('ventArea').value=''">✕ clear it</button>
+    <p class="vent-note">Nothing typed here is stored or sent anywhere. This is just for you chaggot.</p>
+  </div>
+
+  <div class="card" style="--delay:1.0s">
+    <h2>A reframe</h2>
+    <p>What would you tell me if I came to you feeling exactly like you do right now? I think you'd be kind and patient. You wouldn't just fart and shit in my face. I think you'd remind me that one hard moment doesn't erase all the good ones.</p>
+    <p>Please say that to yourself. You deserve the same grace you give others.</p>
+  </div>
+
+  <div class="emergency">
+    <p>click when you need something good</p>
+    <button class="emergency-btn" onclick="showNote()">✦ Click if you need to hear something good ✦</button>
+    <div class="note-display" id="noteDisplay"></div>
+  </div>
+
+  <div class="nav-pills">
+    <a href="memories.html">🫶 Our memories</a>
+    <a href="stressed.html">💭 Also stressed</a>
+    <a href="index.html">↩ Start over</a>
+  </div>
+
+  <script>
+    const notes = [
+      "Go rest!!!!",
+      "I am proud of you for trying even though you know you suck sometimes.",
+      "You don't have to perform right now. Just don't play league!!!",
+      "You are not behind. In fact, you are light years ahead of where I am right now.",
+      "Your value is never going to be productivity.",
+      "Being tired is never going to be a failure.",
+      "Bitch go eat some good ass food. NOT ARRILLAGA!",
+      "I am thinking about you many times throughout my day, even when I'm not there.",
+      "You've endured Satan's asshole before. You'll endure this too.",
+      "Bitch stop playing League and go outside!!!!",
+      "You are someone I genuinely admire, no matter how many stupid things you do.",
+      "The fact that you care this much is actually why you are such a competent person.",
+      "Stop trying to please these fake ass bitches.",
+      "Progress is unlikely to be visible. You're still moving. You just have to pick up the pace.",
+      "I see you working, and I see you trying. I'm proud.",
+      "Bitch stop scrolling. Go outside or play in the sand. Come back.",
+      "You are someone worth taking care of, so take care of yourself. If you feel chopped, don't just complain.",
+      "Get off your ass and do that one task you need to do. That's all you need to do right now.",
+      "Come ask me to sit in the library or outside with you. I'll do it if I can.",
+      "Being overwhelmed doesn't mean you're a stupid chud.",
+      "You have surprisingly survived 100% of your hard days. That's your record, so keep it that way.",
+      "The stress is real, and you are also stronger than it (although you are forever a twink).",
+      "It's okay to ask for help. Your amazing chaggot is here for you.",
+      "You are not alone in this. Guess what? Your amazing chaggot is probably going through some shit too.",
+      "Future you will thank present you for resting. Go get some sleep bitch.",
+      "Your brain needs breaks. You are not a lazy person. You might be distracted, so lock the fuck in.",
+      "I'm rooting for you always.",
+      "Bitch go outside!!!!",
+      "You matter to me, even if your grades are shit. Even if you have the best grades ever. In fact, I might hate you even more if you have better grades than me (which you probably do)!",
+    ];
+
+    function showNote() {
+      const el = document.getElementById('noteDisplay');
+      el.classList.remove('visible');
+      setTimeout(() => { el.textContent = '"' + notes[Math.floor(Math.random() * notes.length)] + '"'; el.classList.add('visible'); }, 300);
+    }
+  </script>
+</body>
+</html>

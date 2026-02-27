@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Miss You — For You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --gold: #c9a96e; --rust: #b5704a; --sage: #8a9e8c; --slate: #5a6670; --ink: #2d2a26; --accent: #c9826e; }
+    body { min-height: 100vh; background: linear-gradient(160deg, #f7f0ea 0%, #f5ece4 60%, #faf6f0 100%); font-family: 'Lora', Georgia, serif; color: var(--ink); display: flex; flex-direction: column; align-items: center; padding: 60px 24px 80px; }
+    .back { position: fixed; top: 24px; left: 24px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--slate); text-decoration: none; letter-spacing: 0.1em; opacity: 0.6; transition: opacity 0.2s; }
+    .back:hover { opacity: 1; }
+    .mood-tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; text-align: center; max-width: 560px; line-height: 1.3; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    h1 em { font-style: italic; color: var(--rust); }
+    .subhead { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--slate); text-align: center; margin-bottom: 50px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+    .card { background: white; border: 1px solid rgba(201,130,110,0.2); border-radius: 6px; padding: 32px 36px; max-width: 520px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.8s ease var(--delay, 0.8s) forwards; }
+    .card h2 { font-size: 13px; font-family: 'DM Mono', monospace; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .card p { font-size: 16px; line-height: 1.75; }
+    .card p + p { margin-top: 12px; }
+    .letter { background: #fdf9f5; border: 1px solid rgba(201,130,110,0.2); border-radius: 6px; padding: 36px; max-width: 520px; width: 100%; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8); position: relative; opacity: 0; animation: fadeUp 0.8s ease 1.0s forwards; }
+    .letter::before { content: '✉'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .letter h2 { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; margin-top: 8px; text-align: center; }
+    .letter p { font-size: 16px; line-height: 1.85; color: var(--ink); font-style: italic; }
+    .letter .sign { text-align: right; margin-top: 24px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--slate); }
+    .memories-cta { background: var(--ink); border-radius: 6px; padding: 32px; max-width: 520px; width: 100%; text-align: center; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 1.3s forwards; }
+    .memories-cta p { color: rgba(250,246,240,0.7); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; margin-bottom: 20px; }
+    .memories-cta a { display: block; background: var(--accent); color: white; padding: 16px 32px; font-family: 'Lora', serif; font-size: 16px; border-radius: 4px; text-decoration: none; transition: all 0.2s; }
+    .memories-cta a:hover { background: var(--rust); transform: scale(1.02); }
+    .nav-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 520px; margin-top: 10px; opacity: 0; animation: fadeUp 0.8s ease 1.6s forwards; }
+    .nav-pills a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--slate); text-decoration: none; border: 1px solid rgba(90,102,112,0.3); border-radius: 20px; padding: 6px 14px; transition: all 0.2s; }
+    .nav-pills a:hover { color: var(--ink); border-color: var(--accent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">← back</a>
+  <p class="mood-tag">🫶 I miss you</p>
+  <h1>I miss <br><em>you too</em> chaggot.</h1>
+  <p class="subhead">i made this whole thing because of that, actually.</p>
+
+  <div class="card" style="--delay:0.7s">
+    <h2>The truth</h2>
+    <p>I built this for you because I can't always be there when you need me. I remember that you said that if you could ask a genie in a bottle to physically build you one wish, it would be a therapeutic life assistant (you called the genie stupid btw). I thought very hard about it, and this is what I came up with. I'm not a fucking witch, but I think this would be helpful for you. I was originally going to code this into a handheld device, but I couldn't get my hands on an OLED. I wanted something of me to exist in the spaces between your life. I can be something that could hold you a little when I'm not around.</p>
+    <p>Missing someone you love is one of the sweetest kinds of ache. It means what we have is real and important. What we have is very, very real, and this is a small token of my appreciation that you are part of my Stanford experience. Despite all the struggles, I have loved every second here so far. Even when I had to hear AND smell Diego's nasty shits in Wilbur, and had to deal with my tires falling off my shitty ass faggot Cadillac while going to Dave's Hot Chicken.</p>
+    <p>I coded this up for you for your 19th birthday, and it seems decently practical because we are both moving more into adulthood. A year after writing this, we will no longer have the privilege of being teenagers. I am so grateful to have you a part of this precious time in my life because, really, it is the first time I have ever felt so liberated. To me, you represent the idea of freedom itself and I love learning alongside, from, and with you. I have dedicated my entire life to this pursuit of learning and processing information, and you helped me kickstart a new chapter here.</p>
+  </div>
+
+  <div class="letter">
+    <h2>One last letter from me</h2>
+    <p>I hope you're reading this somewhere comfortable. I hope you have something warm nearby.<br><br>
+    I think about you more than I probably say. The moments that stick with me are often the small stuff alongside other things. Laughing at something genuinely retarded on the walk back from class, or that specific energy we get when we're both in a good mood at the same time.<br><br>
+    You are one of my favorite people. Not just here, not just at Stanford — just in general. In life. You are someone I would have wanted to find no matter where I ended up.<br><br>
+    I'm glad it was here, though. Have an amazing birthday today, and have an amazing day whenever you are reading this.</p>
+    <p class="sign">— always, chaggot</p>
+  </div>
+
+  <div class="memories-cta">
+    <p>go somewhere that feels like us</p>
+    <a href="memories.html">🫶 Visit our memory wall</a>
+  </div>
+
+  <div class="nav-pills">
+    <a href="memories.html">🫶 Our memories</a>
+    <a href="index.html">↩ Start over</a>
+  </div>
+</body>
+</html>
