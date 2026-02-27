@@ -119,6 +119,11 @@
       transform: scale(1.02);
     }
 
+    .tile.missing {
+      background: linear-gradient(135deg, rgba(201,169,110,0.12), rgba(122,155,181,0.10));
+    }
+    .tile.missing img { opacity: 0.12; filter: grayscale(1); }
+
     .tile .badge {
       position: absolute;
       left: 10px;
@@ -232,13 +237,6 @@
       white-space: pre-wrap;
     }
 
-    .note-hint {
-      margin-top: 14px;
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      color: rgba(90,102,112,0.75);
-    }
-
     @media (max-width: 860px) {
       .modal-body { grid-template-columns: 1fr; }
       .modal-photo img { max-height: 60vh; }
@@ -259,6 +257,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -294,30 +293,22 @@
         </div>
         <div class="modal-note">
           <div class="note-label">note from me</div>
-          <div class="note-text" id="modalNote">No note yet. Add one in the notes object in the script when you’re ready.</div>
+          <div class="note-text" id="modalNote">No note yet.</div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
+    // ====== CONFIG ======
     const IMAGE_DIR = "img";
-function urlFor(n, ext) {
-  return `${IMAGE_DIR}/${n}.${ext}`;
-}
-    // === FILE EXTENSIONS (from Kayla's mapping) ===
-    const pngSet = new Set([4,7,16,19,21,23,25,26,44,46,48,50,71]);
-    const jpgSet = new Set([1,2,3,6,9,17,20,22,24,42,43,45,47,49,51,52,53,68,70,73]);
-    // Everything else default to .jpeg (change to .jpg if your files are .jpg)
-    // IMPORTANT: Use the extension that actually exists on disk.
-    function extFor(n) {
-      if (pngSet.has(n)) return "png";
-      if (jpgSet.has(n)) return "jpg";
-      return "jpeg";
-    }
+    const START = 1;
+    const END = 73;
 
-    // === OPTIONAL NOTES: add later as you write them ===
-    // Example: notes[1] = "The Oval. Golden hour. You were talking and I felt lucky.";
+    // Because your folder contains a mix of .jpg, .jpeg, .png:
+    const EXTENSIONS = ["jpg", "jpeg", "png"];
+
+    // ====== NOTES ======
     const notes = {
       1: "Halloween with Carrot and Jason the Ween. They look so unbelievably stupid",
       2: "We went to the library 2 times the entire quarter. We got, you guessed it, no work done. And we were studying for Math 21. At least I had you there, because I genuinely would have shot myself",
@@ -353,11 +344,11 @@ function urlFor(n, ext) {
       32: "We were at Kinokuniya bookstore in Japan town. I don't remember if we were having ramen there or not, but we sat on the floor while I tutored. Afterwards, you had to call the chinks from COLLEGE 102. I will never forget how dumb our classmates were in that class",
       33: "Hollow carrot",
       34: "We were on that rooftop I took you to in downtown SF. We were watching workers wrap up their shifts in the business building beside the church. I wonder if that will be you and I one day. I hope we don't end up corporate slaves",
-       35: "Dustin's cat. We were invited to Dustin's house for the COLLEGE 102 dinner and we had the privilege of meeting his adorable cat. I will never forget that 3 hour long conversation we had with Dustin and Dev, where we dumped all our vulnerabilities about Stanford's tech culture into their laps. Dustin's cat makes me miss my own cats back at home (again)",
+      35: "Dustin's cat. We were invited to Dustin's house for the COLLEGE 102 dinner and we had the privilege of meeting his adorable cat. I will never forget that 3 hour long conversation we had with Dustin and Dev, where we dumped all our vulnerabilities about Stanford's tech culture into their laps. Dustin's cat makes me miss my own cats back at home (again)",
       36: "Quarter 2 Valentine's day. We were so lonely we had to get each other Valentine's day presents, and we also got into our first major argument that day (over Super Idol). I went to Whole Foods after babysitting Tyler for his hair appointment, and unintentionally picked up a gift for you",
       37: "It's fucking David again",
-      38: "My faggy car's battery was genuinely on life support. I had to go check my car's battery and jump start it 4 times that day. I almost had a panic attack because I got stranded in the Chipotle parking lot. This was such a terrible day bro",
-      39: "Our first adventure to In N' Out. I remember that it was your first time at an In N' Out in general.", 
+      38: "My car's battery was genuinely on life support. I had to go check my car's battery and jump start it 4 times that day. I almost had a panic attack because I got stranded in the Chipotle parking lot. This was such a terrible day bro",
+      39: "Our first adventure to In N' Out. I remember that it was your first time at an In N' Out in general.",
       40: "Korean food post-tutor session. This was in Redwood City I'm pretty sure",
       41: "Our favorite teacher!!!!",
       42: "Andrew Bell's Zoom class. I literally could not stop laughing during this Zoom",
@@ -365,7 +356,7 @@ function urlFor(n, ext) {
       44: "No words needed again",
       45: "Your sausage eyes",
       46: "Rinc diversity",
-      47: "NSO was truly a time. Sage bruh holy", 
+      47: "NSO was truly a time. Sage bruh holy",
       48: "My call logs are literally just populated by you",
       49: "I think this was NSO, too? We were fat and only went for the food",
       50: "I'm literally a boyfriend and I'm not even trans",
@@ -391,92 +382,116 @@ function urlFor(n, ext) {
       70: "I miss when I actually had hair",
       71: "Thank you Raymond for providing us with the least helpful information known to man",
       72: "I don't even know what to say",
-      73: "Your second time doing my makeup",
-                };
+      73: "Your second time doing my makeup"
+    };
 
-    const TOTAL = 73;
-    const grid = document.getElementById('galleryGrid');
+    // ====== HELPERS ======
+    function urlFor(n, ext) {
+      return `${IMAGE_DIR}/${n}.${ext}`;
+    }
 
-    const items = [];
-    for (let i = 1; i <= TOTAL; i++) {
-      const src = `img/${i}.${extFor(i)}`;
-      items.push({ i, src });
+    // Tries jpg -> jpeg -> png until one loads (no guessing needed)
+    function setImgWithFallback(imgEl, n, onMissing) {
+      let idx = 0;
 
-      const tile = document.createElement('div');
-      tile.className = 'tile';
-      tile.setAttribute('data-index', String(i));
+      function tryNext() {
+        if (idx >= EXTENSIONS.length) {
+          if (typeof onMissing === "function") onMissing();
+          return;
+        }
+        imgEl.src = urlFor(n, EXTENSIONS[idx++]);
+      }
 
-      const img = document.createElement('img');
-      img.src = src;
+      imgEl.onerror = tryNext;
+      tryNext();
+    }
+
+    // ====== BUILD GRID ======
+    const grid = document.getElementById("galleryGrid");
+
+    for (let i = START; i <= END; i++) {
+      const tile = document.createElement("div");
+      tile.className = "tile";
+
+      const img = document.createElement("img");
       img.alt = `Memory ${i}`;
-      img.loading = 'lazy';
+      img.loading = "lazy";
 
-      const badge = document.createElement('div');
-      badge.className = 'badge';
+      setImgWithFallback(img, i, () => {
+        tile.classList.add("missing");
+      });
+
+      const badge = document.createElement("div");
+      badge.className = "badge";
       badge.textContent = `#${i}`;
 
       tile.appendChild(img);
       tile.appendChild(badge);
-      tile.addEventListener('click', () => openModal(i));
+
+      tile.addEventListener("click", () => openModal(i));
 
       grid.appendChild(tile);
     }
 
-    // === MODAL LOGIC ===
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalNote = document.getElementById('modalNote');
-    const closeBtn = document.getElementById('closeBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
+    // ====== MODAL LOGIC ======
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalNote = document.getElementById("modalNote");
+    const closeBtn = document.getElementById("closeBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
 
-    let current = 1;
+    let current = START;
 
     function setModal(n) {
       current = n;
-      const src = `img/${n}.${extFor(n)}`;
-      modalImg.src = src;
       modalTitle.textContent = `Memory #${n}`;
-      modalNote.textContent = notes[n] || "No note yet. Add one in the notes object in the script when you’re ready.";
+      modalNote.textContent = notes[n] || "No note yet.";
+
+      modalImg.style.opacity = "1";
+      setImgWithFallback(modalImg, n, () => {
+        modalImg.style.opacity = "0.15";
+        modalImg.alt = `Missing image: ${n}`;
+      });
     }
 
     function openModal(n) {
       setModal(n);
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
     }
 
     function closeModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
     }
 
     function prev() {
-      const n = current <= 1 ? TOTAL : current - 1;
+      const n = current <= START ? END : current - 1;
       setModal(n);
     }
 
     function next() {
-      const n = current >= TOTAL ? 1 : current + 1;
+      const n = current >= END ? START : current + 1;
       setModal(n);
     }
 
-    closeBtn.addEventListener('click', closeModal);
-    prevBtn.addEventListener('click', prev);
-    nextBtn.addEventListener('click', next);
+    closeBtn.addEventListener("click", closeModal);
+    prevBtn.addEventListener("click", prev);
+    nextBtn.addEventListener("click", next);
 
-    modal.addEventListener('click', (e) => {
+    modal.addEventListener("click", (e) => {
       if (e.target === modal) closeModal();
     });
 
-    window.addEventListener('keydown', (e) => {
-      if (!modal.classList.contains('open')) return;
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
+    window.addEventListener("keydown", (e) => {
+      if (!modal.classList.contains("open")) return;
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
     });
   </script>
 
